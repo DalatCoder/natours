@@ -1,0 +1,25 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "Learning NodeJS, Express and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DalatCoder/natours.git"
+  },
+  "author": "Dalat_Coder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DalatCoder/natours/issues"
+  },
+  "homepage": "https://github.com/DalatCoder/natours#readme",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  }
+}
