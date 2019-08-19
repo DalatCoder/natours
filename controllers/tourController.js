@@ -8,6 +8,9 @@ const tours = JSON.parse(
   )
 );
 
+const acceptKeys = [...Object.keys(tours[0])];
+const requiredKeys = ['name', 'price'];
+
 exports.checkID = (req, res, next, value) => {
   const index = tours.findIndex(el => el.id === value * 1);
   if (index === -1) {
@@ -17,6 +20,29 @@ exports.checkID = (req, res, next, value) => {
     });
   }
   req.tourID = index;
+  next();
+};
+
+exports.checkBodyData = (req, res, next) => {
+  const incomingKeys = [...Object.keys(req.body)];
+  const isValidKey = incomingKeys.every(key => acceptKeys.includes(key));
+
+  if (!isValidKey) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Invalid information!'
+    });
+  }
+
+  const isPassed = requiredKeys.every(key => req.body[key]);
+
+  if (!isPassed) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'Missing name or price!'
+    });
+  }
+
   next();
 };
 
