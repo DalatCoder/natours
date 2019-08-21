@@ -49,7 +49,7 @@ const tourDescription = {
   createdAt: {
     type: Date,
     default: Date.now(),
-    select: false // Hide properties from client
+    select: false // Hide property from client
   },
   startDates: [Date]
 };
