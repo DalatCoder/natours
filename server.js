@@ -23,37 +23,6 @@ mongoose
     console.log(err);
   });
 
-const tourDescription = {
-  name: {
-    type: String,
-    unique: true,
-    required: [true, 'A tour must have a name!']
-  },
-  rating: {
-    type: Number,
-    default: 4.5
-  },
-  price: {
-    type: String,
-    required: [true, 'A tour must have a price!']
-  }
-};
-
-const tourSchema = new mongoose.Schema(tourDescription);
-
-const Tour = mongoose.model('Tour', tourSchema);
-
-const newTour = new Tour({
-  name: 'Ho Xuan Huong',
-  rating: 5,
-  price: 5000000
-});
-
-newTour
-  .save()
-  .then(doc => console.log(doc))
-  .catch(err => console.log(err));
-
 app.listen(port, () => {
   console.log(`Server is running on port: ${chalk.green(port)}`);
 });
