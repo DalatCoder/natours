@@ -11,12 +11,14 @@ exports.aliasTopTours = (req, res, next) => {
 
 exports.getAllTour = async (req, res) => {
   try {
-    // Lay data tu query
+    // APIFeatures(mongooseQueryObject, req.query)
     const features = new APIFeatures(Tour.find(), req.query)
       .sort()
       .filter()
       .limit()
       .paginate();
+
+    // Await to get data from mongoose query object
     const tours = await features.query;
 
     res.status(200).json({
@@ -123,6 +125,39 @@ exports.deleteTour = async (req, res) => {
     res.status(400).json({
       status: 'fail',
       message: 'Invalid tour ID!'
+    });
+  }
+};
+
+exports.getTourStats = async (req, res) => {
+  try {
+    const stats = await Tour.aggregate([
+      {
+        $match: { ratingsAverage: { $gte: 4.5 } }
+      },
+      {
+        $group: {
+          _id: { $toUpper: '$difficulty' },
+          numTours: { $sum: 1 },
+          numRatings: { $sum: '$ratingsQuantity' },
+          avgRating: { $avg: '$ratingsAverage' },
+          avgPrice: { $avg: '$price' },
+          minPirce: { $min: '$price' },
+          maxPrice: { $max: '$price' }
+        }
+      }
+    ]);
+
+    res.status(200).json({
+      message: 'success',
+      data: {
+        stats
+      }
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: 'fail',
+      message: error
     });
   }
 };
