@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const tourDescription = {
+const schemaDefinition = {
   name: {
     type: String,
     unique: true,
