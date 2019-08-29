@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const validator = require('validator');
+// const validator = require('validator');
 
 const schemaDefinition = {
   name: {
@@ -49,7 +49,7 @@ const schemaDefinition = {
   },
   priceDiscount: {
     type: Number,
-    // this only points to current doc on NEW document creation
+    // 'this' keyword only points to current doc on NEW document creation
     validate: {
       validator: function(val) {
         return val < this.price;
@@ -86,6 +86,7 @@ const schemaOption = {
 
 const tourSchema = new mongoose.Schema(schemaDefinition, schemaOption);
 
+// virtual property
 tourSchema.virtual('durationWeek').get(function() {
   return this.duration / 7;
 });
@@ -113,7 +114,6 @@ tourSchema.pre(/^find/, function(next) {
 // AGGRERATION MIDDLEWARE
 tourSchema.pre('aggregate', function(next) {
   this.pipeline().unshift({ $match: { secret: { $ne: true } } });
-
   next();
 });
 
